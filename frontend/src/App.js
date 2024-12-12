@@ -21,7 +21,7 @@ function App() {
     }
 
     try {
-      const response = await axiosInstance.get("/fetch-image", {
+      const response = await axiosInstance.get("/api/fetch-image", {
         params: { path: imagePath },
         responseType: "arraybuffer",
       });
