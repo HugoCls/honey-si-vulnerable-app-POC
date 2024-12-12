@@ -44,7 +44,7 @@ const ExifForm = ({ axiosInstance, imagePath, setExifData }) => {
         try {
             const jsonPathQuery = selectedFields.map((field) => `$..${field}`);
             const response = await axiosInstance.post(
-                '/query',
+                '/api/query',
                 {
                     imagePath,
                     query: jsonPathQuery
