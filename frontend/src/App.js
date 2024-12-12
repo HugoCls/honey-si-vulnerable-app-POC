@@ -8,7 +8,7 @@ function App() {
   const [imageUrl, setImageUrl] = useState("");
   const [exifData, setExifData] = useState({});
 
-  const backendUrl = "http://0.0.0.0/api"; // Backend base URL
+  const backendUrl = process.env.REACT_APP_BACKEND_URL; // Use the environment variable
 
   const axiosInstance = axios.create({
     baseURL: backendUrl,
