@@ -9,7 +9,7 @@ const app = express();
 const PORT = 8000;
 
 const imageServer = axios.create({
-    baseURL: 'https://picsum.photos',
+    baseURL: 'https://website-images-bucket-5tenders.s3.eu-west-3.amazonaws.com',
 })
 
 app.use(cors());
