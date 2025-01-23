@@ -24,7 +24,7 @@ app.get('/fetch-image', async (req, res) => {
             return res.status(400).send('PATH parameter is required');
         }
 
-        const response = await imageServer.get(`/${imagePath}`, {
+        const response = await imageServer.get(`/${imagePath}.jpeg`, {
             responseType: 'arraybuffer',
             timeout: 5000,
         });
