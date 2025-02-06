@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  max-width: 600px;
+  max-width: 70%;
   margin: auto;
   background: #fff;
   padding: 20px;
@@ -73,4 +73,39 @@ pre {
   font-family: monospace;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.image-list li {
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+.image-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fetch-section,
+.upload-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+@media (max-width: 768px) {
+  .image-actions {
+    flex-direction: column;
+  }
 }
