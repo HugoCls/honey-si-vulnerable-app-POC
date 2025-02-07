@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const sharp = require('sharp');
@@ -10,7 +11,7 @@ const app = express();
 const PORT = 8000;
 
 const imageServer = axios.create({
-    baseURL: 'https://website-images-bucket-5tenders.s3.eu-west-3.amazonaws.com',
+    baseURL: process.env.BUCKET_BASE_URL || 'https://website-images-bucket-5tenders.s3.eu-west-3.amazonaws.com',
 })
 
 const upload = multer({ storage: multer.memoryStorage() });
