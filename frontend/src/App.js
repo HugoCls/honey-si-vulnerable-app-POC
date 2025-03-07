@@ -20,7 +20,9 @@ function App() {
   const handleListImages = async () => {
     try {
       const response = await axiosInstance.get("/list-images");
-      setImageList(response.data);
+      setImageList(
+        response.data.filter((image) => image.endsWith(".jpeg")).map((image) => image.split(".")[0])
+      );
     } catch (error) {
       console.error("Error fetching the image list:", error);
     }
