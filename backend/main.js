@@ -11,7 +11,7 @@ const app = express();
 const PORT = 8000;
 
 const imageServer = axios.create({
-    baseURL: process.env.BUCKET_BASE_URL || 'https://website-images-bucket-5tenders.s3.eu-west-3.amazonaws.com',
+    baseURL: process.env.BUCKET_BASE_URL || 'https://website-images-bucket-8tenders.s3.eu-west-3.amazonaws.com',
 })
 
 const upload = multer({ storage: multer.memoryStorage() });
@@ -23,11 +23,12 @@ app.get('/list-images', async (req, res) => {
     console.log('Listing images...');
 
     try {
-        const response = await imageServer.get("/", {
+
+        const response = await imageServer.get('/', {
             timeout: 10000,
         });
         const xmlData = response.data;
-        const regex = /<Key>([^<]+)\.jpeg<\/Key>/g;
+        const regex = /<Key>([^<]+)<\/Key>/g;
         let match;
         const imageKeys = [];
 
