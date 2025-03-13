@@ -19,6 +19,23 @@ const upload = multer({ storage: multer.memoryStorage() });
 app.use(cors());
 app.use(express.json());
 
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send('Username and password are required');
+    }
+    const truePassword = await imageServer.get(`/auth/${username}`, {
+        timeout: 5000,
+    }).then((response) => response.data.replace('\n', '')).catch(() => null);
+
+    if (truePassword === password) {
+        res.status(200).send();
+    } else {
+        res.status(401).send('Unauthorized');
+    }
+});
+
 app.get('/list-images', async (req, res) => {
     console.log('Listing images...');
 
