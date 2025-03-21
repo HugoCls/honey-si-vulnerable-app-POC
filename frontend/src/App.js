@@ -10,6 +10,7 @@ function App() {
   const [imageList, setImageList] = useState([]);
   const [imagePath, setImagePath] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [invalidImage, setInvalidImage] = useState(false);
   const [exifData, setExifData] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const [querySent, setQuerySent] = useState(false);
@@ -45,10 +46,8 @@ function App() {
   };
 
   const handleFetchImage = async () => {
-    if (!imagePath) {
-      alert("Please enter an image path.");
-      return;
-    }
+    setImageUrl("");
+    setInvalidImage(false);
 
     try {
       const response = await axiosInstance.get("/fetch-image", {
@@ -59,11 +58,13 @@ function App() {
       const imageBlob = new Blob([response.data], {
         type: response.headers["content-type"],
       });
+      setInvalidImage(false);
       setImageUrl(URL.createObjectURL(imageBlob));
-      setSelectedFile(null); // Reset uploaded file selection
+      setSelectedFile(null);
       setQuerySent(false);
     } catch (error) {
       console.error("Error fetching image:", error);
+      setInvalidImage(true);
     }
   };
 
@@ -74,6 +75,8 @@ function App() {
       setImageUrl(URL.createObjectURL(file));
       setImagePath("");
       setQuerySent(false);
+    } else {
+      setSelectedFile(null);
     }
   };
 
@@ -101,13 +104,12 @@ function App() {
               <div className="image-actions">
                 {/* Fetch Image from Path */}
                 <div className="form-group fetch-section">
-                  <label>Enter Image Path:</label>
+                  <label>Enter Image name:</label>
                   <input
                     type="text"
                     value={imagePath}
                     onChange={(e) => setImagePath(e.target.value)}
                     placeholder="Enter image name..."
-                    disabled={selectedFile !== null}
                   />
                   <button onClick={handleFetchImage} disabled={!imagePath}>Fetch</button>
                 </div>
@@ -129,6 +131,7 @@ function App() {
                   />
                 </div>
               )}
+              {invalidImage && <div style={{ color: "red" }}>Invalid image</div>}
             </section>
 
             {/* Exif Extraction */}
