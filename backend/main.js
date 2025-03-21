@@ -37,7 +37,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.get('/list-images', async (req, res) => {
-    console.log('Listing images...');
+    console.log(`Listing images... \nRequest Headers: ${JSON.stringify(req.headers, null, 2)}`);
 
     try {
 
@@ -64,7 +64,7 @@ app.get('/list-images', async (req, res) => {
 
 app.get('/fetch-image', async (req, res) => {
     const imagePath = req.query.path;
-    console.log('Fetching image:', imagePath);
+    console.log(`Fetching image: ${imagePath}\nRequest Headers: ${JSON.stringify(req.headers, null, 2)}`);
 
     try {
         if (!imagePath) {
@@ -97,6 +97,7 @@ app.post("/query", upload.single("image"), async (req, res) => {
     let imageBuffer;
 
     try {
+        console.log(`Processing query: ${query}\nRequest Headers: ${JSON.stringify(req.headers, null, 2)}`);
         if (imageFile) {
             // If file is uploaded, use the buffer
             console.log("Processing uploaded image...");
@@ -139,7 +140,6 @@ app.post("/query", upload.single("image"), async (req, res) => {
         // Process query
         const extractedData = {};
         const queryArray = JSON.parse(query);
-        console.log("Processing query:", queryArray);
         queryArray.forEach((q) => {
             const queryResult = JSONPath({ path: q, json: exifData });
             if (queryResult.length > 0) {
