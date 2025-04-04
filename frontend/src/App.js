@@ -4,7 +4,8 @@ import "./App.css";
 import ExifForm from "./ExifForm";
 
 function App() {
-  const backendUrl = process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:8000";
   const authEnabled = process.env.REACT_APP_AUTH_ENABLED === "true";
 
   const [imageList, setImageList] = useState([]);
@@ -25,7 +26,9 @@ function App() {
 
   const handleAuth = async () => {
     setInvalidCreds(false);
-    const response = await axiosInstance.post("/login", { username, password }).catch((error) => error.response);
+    const response = await axiosInstance
+      .post("/login", { username, password })
+      .catch((error) => error.response);
     if (response.status === 200) {
       setIsLoggedIn(true);
       setInvalidCreds(false);
@@ -38,7 +41,9 @@ function App() {
     try {
       const response = await axiosInstance.get("/list-images");
       setImageList(
-        response.data.filter((image) => image.endsWith(".jpeg")).map((image) => image.split(".")[0])
+        response.data
+          .filter((image) => image.endsWith(".jpeg"))
+          .map((image) => image.split(".")[0])
       );
     } catch (error) {
       console.error("Error fetching the image list:", error);
@@ -91,7 +96,7 @@ function App() {
             <hr />
 
             <section className="section">
-              <h2>List Available Images</h2>
+              <h2>List sample images from bucket</h2>
               <button onClick={handleListImages}>List Images</button>
               <ul className="image-list" style={{ textAlign: "left" }}>
                 {imageList.map((image) => (
@@ -111,13 +116,19 @@ function App() {
                     onChange={(e) => setImagePath(e.target.value)}
                     placeholder="Enter image name..."
                   />
-                  <button onClick={handleFetchImage} disabled={!imagePath}>Fetch</button>
+                  <button onClick={handleFetchImage} disabled={!imagePath}>
+                    Fetch
+                  </button>
                 </div>
 
                 {/* Upload Image */}
                 <div className="form-group upload-section">
                   <label>Upload Image:</label>
-                  <input type="file" accept="image/*" onChange={handleFileChange} />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                  />
                 </div>
               </div>
 
@@ -131,7 +142,9 @@ function App() {
                   />
                 </div>
               )}
-              {invalidImage && <div style={{ color: "red" }}>Invalid image</div>}
+              {invalidImage && (
+                <div style={{ color: "red" }}>Invalid image</div>
+              )}
             </section>
 
             {/* Exif Extraction */}
@@ -161,7 +174,9 @@ function App() {
                     {Object.entries(exifData).map(([field, value]) => (
                       <tr key={field}>
                         <td>{field}</td>
-                        <td>{Array.isArray(value) ? value.join(", ") : value}</td>
+                        <td>
+                          {Array.isArray(value) ? value.join(", ") : value}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -173,9 +188,14 @@ function App() {
           </div>
         </div>
       ) : (
-        <div style={{ textAlign: "center", maxWidth: "30%", flexDirection: "column", margin: "auto"
-
-         }}>
+        <div
+          style={{
+            textAlign: "center",
+            maxWidth: "30%",
+            flexDirection: "column",
+            margin: "auto",
+          }}
+        >
           <h2>Login</h2>
           <div className="form-group">
             <label>Username:</label>
@@ -195,7 +215,9 @@ function App() {
             />
           </div>
           <button onClick={handleAuth}>Login</button>
-          {invalidCreds && <div style={{ color: "red" }}>Invalid credentials</div>}
+          {invalidCreds && (
+            <div style={{ color: "red" }}>Invalid credentials</div>
+          )}
         </div>
       )}
     </div>
